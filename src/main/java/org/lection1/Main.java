@@ -1,7 +1,7 @@
 package org.lection1;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -81,42 +81,42 @@ public class Main {
     final int MAX_WEIGHT = 450;
     int sumWeight = 0;
     int countPeople = 0;
-    while (countPeople < MAX_AMOUNT_OF_PEOPLE) {
+    int inputWeight = 0;
+    while (countPeople < MAX_AMOUNT_OF_PEOPLE && sumWeight < 450) {
       System.out.print("Enter weight of next person: ");
       Scanner scanner = new Scanner(System.in);
-      int inputWeight = scanner.nextInt();
+      inputWeight = scanner.nextInt();
       countPeople++;
       sumWeight += inputWeight;
-      if (countPeople == MAX_AMOUNT_OF_PEOPLE) {
-        System.out.println("It's not allowed more than 6 people");
-        break;
-      }
-      if (sumWeight > MAX_WEIGHT) {
-        System.out.println("It's not allowed more than 450kg");
-        break;
-      }
     }
-    System.out.println(countPeople);
-    System.out.println(sumWeight);
+    if (countPeople == MAX_AMOUNT_OF_PEOPLE) {
+      System.out.println("It's not allowed more than 6 people");
+      System.out.println(sumWeight);
+    }
+    if (sumWeight > MAX_WEIGHT) {
+      System.out.println("It's not allowed more than 450kg");
+      System.out.println(sumWeight - inputWeight);
+    }
+    System.out.println(countPeople - 1);
   }
 
   //task 4
   public static int[] findOnlyFirstArrayElements(int[] firstArray, int[] secondArray) {
-    List<Integer> uniqueFromFirstArray = new ArrayList<>();
-    for (int j : firstArray) {
+    int[] uniqueFromFirstArray = new int[firstArray.length];
+    int resultIndex = 0;
+    for (int i = 0; i < firstArray.length; i++) {
       boolean equal = false;
-      for (int k : secondArray) {
-        if (j == k) {
+      for (int j = 0; j < secondArray.length; j++) {
+        if (firstArray[i] == secondArray[j]) {
           equal = true;
           break;
         }
       }
       if (!equal) {
-        uniqueFromFirstArray.add(j);
+        uniqueFromFirstArray[resultIndex] = firstArray[i];
+        resultIndex++;
       }
     }
-    return uniqueFromFirstArray.stream()
-        .mapToInt(Integer::intValue)
-        .toArray();
+    return Arrays.copyOf(uniqueFromFirstArray, resultIndex);
   }
 }
